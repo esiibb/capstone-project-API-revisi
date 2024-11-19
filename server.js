@@ -6,28 +6,170 @@ const app = express();
 const PORT = 8080;
 
 // data untuk 20 saham 
-const stocks = [
-    { code: 'CTRA', name: 'Ciputra Development Tbk', logo: 'ciputra.png', sector: 'Properti & Real Estat', description: 'Perusahaan pengembang properti terkemuka di Indonesia dengan berbagai proyek residensial, komersial, dan perhotelan.', website: 'www.ciputradevelopment.com' },
-    { code: 'INDF', name: 'Indofood Sukses Makmur Tbk', logo: 'indofood.png', sector: 'Barang Konsumen Primer', description: 'Produsen makanan dan minuman terbesar di Indonesia, terkenal dengan produk mi instan dan minuman kemasan.', website: 'www.indofood.com' },
-    { code: 'ASII', name: 'Astra International Tbk', logo: 'astra.png', sector: 'Perindustrian', description: 'Perusahaan multinasional dengan portofolio di otomotif, agribisnis, jasa keuangan, dan infrastruktur.', website: 'www.astra.co.id' },
-    { code: 'BSDE', name: 'PT Bumi Serpong Damai Tbk', logo: 'bsdcity.png', sector: 'Properti & Real Estat', description: 'Pengembang kawasan perumahan dan komersial, dikenal dengan proyek BSD City.', website: 'www.bsdcity.com' },
-    { code: 'ICBP', name: 'Indofood CBP Sukses Makmur Tbk', logo: 'indofoodcbp.png', sector: 'Barang Konsumen Primer', description: 'Anak perusahaan Indofood yang bergerak di bidang makanan kemasan, termasuk produk mi instan dan makanan ringan.', website: 'www.indofoodcbp.com' },
-    { code: 'KLBF', name: 'Kalbe Farma Tbk', logo: 'kalbe.png', sector: 'Kesehatan', description: 'Perusahaan farmasi terbesar di Indonesia, memproduksi obat-obatan dan produk kesehatan.', website: 'www.kalbe.co.id' },
-    { code: 'ITMG', name: 'Indo Tambangraya Megah Tbk', logo: 'itm.png', sector: 'Energi', description: 'Perusahaan tambang batubara dengan fokus pada produksi dan perdagangan batubara.', website: 'www.itmg.co.id' },
-    { code: 'JPFA', name: 'JAPFA Comfeed Indonesia Tbk', logo: 'japfa.png', sector: 'Barang Konsumen Primer', description: 'Perusahaan agribisnis yang fokus pada produksi pangan dan pakan ternak di Indonesia.', website: 'www.japfacomfeed.co.id' },
-    { code: 'TLKM', name: 'PT Telkom Indonesia (Persero) Tbk', logo: 'telkom.png', sector: 'Infrastruktur', description: 'Perusahaan telekomunikasi terbesar di Indonesia, menyediakan layanan telepon, internet, dan jaringan.', website: 'www.telkom.co.id' },
-    { code: 'ULTJ', name: 'PT Ultrajaya Milk Industry & Trading Company Tbk', logo: 'ultrajaya.png', sector: 'Barang Konsumen Primer', description: 'Produsen susu dan minuman terkemuka di Indonesia dengan berbagai produk olahan susu.', website: 'www.ultrajaya.co.id' },
-    { code: 'ACES', name: 'PT Aspirasi Hidup Indonesia Tbk', logo: 'aspirasi.png', sector: 'Barang Konsumen Non-Primer', description: 'Perusahaan ritel yang menyediakan perlengkapan rumah tangga dan alat perkakas dengan jaringan toko luas.', website: 'www.acehardware.co.id' },
-    { code: 'TSPC', name: 'Tempo Scan Pacific Tbk', logo: 'temposcan.png', sector: 'Kesehatan', description: 'Perusahaan farmasi dengan berbagai produk kesehatan, termasuk obat-obatan dan kosmetik.', website: 'www.temposcangroup.com' },
-    { code: 'SMAR', name: 'PT Sinar Mas Agro Resources and Technology Tbk', logo: 'smart.png', sector: 'Barang Konsumen Primer', description: 'Perusahaan agribisnis yang bergerak di bidang produksi dan pengolahan kelapa sawit.', website: 'www.smart-tbk.com' },
-    { code: 'SMSM', name: 'Selamat Sempurna Tbk', logo: 'selamatsempurna.png', sector: 'Barang Konsumen Non-Primer', description: 'Produsen filter otomotif dan suku cadang kendaraan dengan pasar internasional.', website: 'www.smsm.co.id' },
-    { code: 'JRPT', name: 'Jaya Real Property Tbk', logo: 'jayaproperti.png', sector: 'Properti & Real Estat', description: 'Pengembang properti yang fokus pada proyek perumahan dan komersial.', website: 'www.jayaproperty.com' },
-    { code: 'DUTI', name: 'Duta Pertiwi Tbk', logo: 'dutapertiwi.png', sector: 'Properti & Real Estat', description: 'Bagian dari Sinar Mas Group yang bergerak di pengembangan properti residensial dan komersial.', website: 'www.sinarmasland.com' },
-    { code: 'EPMT', name: 'Enseval Putera Megatrading Tbk', logo: 'enseval.png', sector: 'Barang Konsumen Primer', description: 'Distributor farmasi dan produk kesehatan terbesar di Indonesia.', website: 'www.enseval.com' },
-    { code: 'SMCB', name: 'PT Solusi Bangun Indonesia Tbk', logo: 'solusibangun.png', sector: 'Barang Baku', description: 'Perusahaan semen dan bahan bangunan yang mendukung sektor konstruksi.', website: 'www.solusibangunindonesia.com' },
-    { code: 'PWON', name: 'Pakuwon Jati Tbk', logo: 'pakuwonjati.png', sector: 'Properti & Real Estat', description: 'Pengembang properti yang terkenal dengan proyek pusat perbelanjaan dan perkantoran.', website: 'www.pakuwonjati.com' },
-    { code: 'JSMR', name: 'PT Jasa Marga Tbk', logo: 'jasamarga.png', sector: 'Infrastruktur', description: 'Operator jalan tol terbesar di Indonesia dengan berbagai proyek jalan tol nasional.', website: 'www.jasamarga.com' },
-];
+const stocks =
+[
+    { 
+        code: 'CTRA', 
+        name: 'Ciputra Development Tbk', 
+        logo: 'ciputra.png', 
+        sector: 'Property & Real Estate', 
+        description: 'A leading property developer in Indonesia with various residential, commercial, and hospitality projects.', 
+        website: 'www.ciputradevelopment.com' 
+    },
+    { 
+        code: 'INDF', 
+        name: 'Indofood Sukses Makmur Tbk', 
+        logo: 'indofood.png', 
+        sector: 'Consumer Staples', 
+        description: 'The largest food and beverage producer in Indonesia, known for its instant noodles and packaged drinks.', 
+        website: 'www.indofood.com' 
+    },
+    { 
+        code: 'ASII', 
+        name: 'Astra International Tbk', 
+        logo: 'astra.png', 
+        sector: 'Industrials', 
+        description: 'A multinational company with a portfolio in automotive, agribusiness, financial services, and infrastructure.', 
+        website: 'www.astra.co.id' 
+    },
+    { 
+        code: 'BSDE', 
+        name: 'PT Bumi Serpong Damai Tbk', 
+        logo: 'bsdcity.png', 
+        sector: 'Property & Real Estate', 
+        description: 'A developer of residential and commercial areas, known for the BSD City project.', 
+        website: 'www.bsdcity.com' 
+    },
+    { 
+        code: 'ICBP', 
+        name: 'Indofood CBP Sukses Makmur Tbk', 
+        logo: 'indofoodcbp.png', 
+        sector: 'Consumer Staples', 
+        description: 'A subsidiary of Indofood engaged in packaged food, including instant noodles and snacks.', 
+        website: 'www.indofoodcbp.com' 
+    },
+    { 
+        code: 'KLBF', 
+        name: 'Kalbe Farma Tbk', 
+        logo: 'kalbe.png', 
+        sector: 'Health', 
+        description: 'The largest pharmaceutical company in Indonesia, producing medicines and health products.', 
+        website: 'www.kalbe.co.id' 
+    },
+    { 
+        code: 'ITMG', 
+        name: 'Indo Tambangraya Megah Tbk', 
+        logo: 'itm.png', 
+        sector: 'Energy', 
+        description: 'A coal mining company focused on coal production and trading.', 
+        website: 'www.itmg.co.id' 
+    },
+    { 
+        code: 'JPFA', 
+        name: 'JAPFA Comfeed Indonesia Tbk', 
+        logo: 'japfa.png', 
+        sector: 'Consumer Staples', 
+        description: 'An agribusiness company focused on food and animal feed production in Indonesia.', 
+        website: 'www.japfacomfeed.co.id' 
+    },
+    { 
+        code: 'TLKM', 
+        name: 'PT Telkom Indonesia (Persero) Tbk', 
+        logo: 'telkom.png', 
+        sector: 'Infrastructure', 
+        description: 'The largest telecommunications company in Indonesia, providing telephone, internet, and network services.', 
+        website: 'www.telkom.co.id' 
+    },
+    { 
+        code: 'ULTJ', 
+        name: 'PT Ultrajaya Milk Industry & Trading Company Tbk', 
+        logo: 'ultrajaya.png', 
+        sector: 'Consumer Staples', 
+        description: 'A leading milk and beverage producer in Indonesia with various dairy products.', 
+        website: 'www.ultrajaya.co.id' 
+    },
+    { 
+        code: 'ACES', 
+        name: 'PT Aspirasi Hidup Indonesia Tbk', 
+        logo: 'aspirasi.png', 
+        sector: 'Consumer Discretionary', 
+        description: 'A retail company offering household supplies and tools with a wide network of stores.', 
+        website: 'www.acehardware.co.id' 
+    },
+    { 
+        code: 'TSPC', 
+        name: 'Tempo Scan Pacific Tbk', 
+        logo: 'temposcan.png', 
+        sector: 'Health', 
+        description: 'A pharmaceutical company with various health products, including medicines and cosmetics.', 
+        website: 'www.temposcangroup.com' 
+    },
+    { 
+        code: 'SMAR', 
+        name: 'PT Sinar Mas Agro Resources and Technology Tbk', 
+        logo: 'smart.png', 
+        sector: 'Consumer Staples', 
+        description: 'An agribusiness company engaged in palm oil production and processing.', 
+        website: 'www.smart-tbk.com' 
+    },
+    { 
+        code: 'SMSM', 
+        name: 'Selamat Sempurna Tbk', 
+        logo: 'selamatsempurna.png', 
+        sector: 'Consumer Discretionary', 
+        description: 'A producer of automotive filters and vehicle spare parts with an international market.', 
+        website: 'www.smsm.co.id' 
+    },
+    { 
+        code: 'JRPT', 
+        name: 'Jaya Real Property Tbk', 
+        logo: 'jayaproperti.png', 
+        sector: 'Property & Real Estate', 
+        description: 'A property developer focused on residential and commercial projects.', 
+        website: 'www.jayaproperty.com' 
+    },
+    { 
+        code: 'DUTI', 
+        name: 'Duta Pertiwi Tbk', 
+        logo: 'dutapertiwi.png', 
+        sector: 'Property & Real Estate', 
+        description: 'A part of Sinar Mas Group engaged in residential and commercial property development.', 
+        website: 'www.sinarmasland.com' 
+    },
+    { 
+        code: 'EPMT', 
+        name: 'Enseval Putera Megatrading Tbk', 
+        logo: 'enseval.png', 
+        sector: 'Consumer Staples', 
+        description: 'The largest pharmaceutical and health product distributor in Indonesia.', 
+        website: 'www.enseval.com' 
+    },
+    { 
+        code: 'SMCB', 
+        name: 'PT Solusi Bangun Indonesia Tbk', 
+        logo: 'solusibangun.png', 
+        sector: 'Basic Materials', 
+        description: 'A cement and building materials company supporting the construction sector.', 
+        website: 'www.solusibangunindonesia.com' 
+    },
+    { 
+        code: 'PWON', 
+        name: 'Pakuwon Jati Tbk', 
+        logo: 'pakuwonjati.png', 
+        sector: 'Property & Real Estate', 
+        description: 'A property developer known for its shopping center and office projects.', 
+        website: 'www.pakuwonjati.com' 
+    },
+    { 
+        code: 'JSMR', 
+        name: 'PT Jasa Marga Tbk', 
+        logo: 'jasamarga.png', 
+        sector: 'Infrastructure', 
+        description: 'The largest toll road operator in Indonesia with various national toll road projects.', 
+        website: 'www.jasamarga.com' 
+    }
+
+]
 
 app.use(express.json());
 app.use('/images', express.static(path.join(__dirname, 'public/images')));
