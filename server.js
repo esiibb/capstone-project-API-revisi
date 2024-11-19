@@ -32,10 +32,13 @@ const stocks = [
 app.use(express.json());
 app.use('/images', express.static(path.join(__dirname, 'public/images')));
 
+
+const getFullImageUrl = (req, logo) => `${req.protocol}://${req.get('host')}/images/${logo}`;
+
 app.get('/stocks', (req, res) => {
     const stockList = stocks.map(stock => ({
         code: stock.code,
-        logo: `/images/${stock.logo}`
+        logo: getFullImageUrl(req, stock.logo)
     }));
     res.json(stockList);
 });
@@ -44,7 +47,7 @@ app.get('/stocks/details', (req, res) => {
     const stockDetails = stocks.map(stock => ({
         code: stock.code,
         name: stock.name,
-        logo: `/images/${stock.logo}`,
+        logo: getFullImageUrl(req, stock.logo),
         sector: stock.sector,
         description: stock.description,
         website: stock.website
@@ -57,7 +60,7 @@ app.get('/stocks/:code', (req, res) => {
     const stock = stocks.find(s => s.code === stockCode);
 
     if (stock) {
-        stock.logo = `/images/${stock.logo}`;
+        stock.logo = getFullImageUrl(req, stock.logo);
         res.json(stock);
     } else {
         res.status(404).json({ message: 'Stock not found' });
